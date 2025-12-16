@@ -7,6 +7,15 @@ class McuSerialCom
     
     VALID_BAUDRATES = [300, 1200, 2400, 4800, 9600, 14400, 19200, 
                         38400, 57600, 115200, 230400, 460800, 921600]
+    valid_ports = []
+                        
+    if RUBY_PLATFORM =~ /win32|mingw|cygwin/
+        valid_ports = (1..20).map { |i| "COM#{i}" }
+    elsif RUBY_PLATFORM =~ /linux/
+        valid_ports = Dir.glob('/dev/ttyUSB*') + Dir.glob('/dev/ttyACM*') + Dir.glob('/dev/ttyS*')
+    elsif RUBY_PLATFORM =~ /darwin/
+        valid_ports = Dir.glob('/dev/tty.*')
+    end
 
     def initialize(port, baudrate, word_len, parity) 
         @port = port

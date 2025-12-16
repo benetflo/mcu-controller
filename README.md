@@ -24,3 +24,8 @@ bundle config set --local path 'vendor/bundle'
 bundle install
 ```
 
+- Run Ruby via Bundler:
+```
+bundle exec ruby mcu_serial_com.rb
+```
+
